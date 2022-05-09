@@ -54,7 +54,7 @@ rm(descr)
 ```
 
 ## H2: The political left is more likely to endorse conspiracy theories involving economic elites, while the political right is more likely to endorse conspiracy theories involving political and cultural elites
-```{r "h1", fig.align="center", fig.height=8, fig.width=8}
+```{r "h1", fig.align="center", fig.height=10, fig.width=12}
 source(here("src/analysis/s2.R"))
 
 p1

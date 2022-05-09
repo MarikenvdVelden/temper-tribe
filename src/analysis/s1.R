@@ -76,7 +76,6 @@ df <- d  %>%
 ## -- plot of interrupted regressions with quadratic line added: --
 p3 <- ggplot(data = d, aes(x = ideology, y = cb)) +
   labs(x = "Political Ideology", y = "Conspiracy Belief") +
-  ylim(c(5.7,6.5)) +
   theme_ipsum() +
   stat_smooth(aes(y = cb), method = "lm", formula = y ~ x + I(x^2),
               size = 1, color = "red",  linetype="dashed", se=FALSE) +
