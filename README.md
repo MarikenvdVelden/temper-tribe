@@ -14,7 +14,7 @@ The following data files might be of interest:
 See the scripts in `src/data-processing` for details on how these files were constructed  for the [first](src/data-processing/prepare-data-s1.md) and the [second study](src/data-processing/prepare-data-s2.md).
 
 # Results
-* [Study 1](src/analysis/s1.md) Demonstrates the analyses to test and visualise hypothesis 1.
-* [Study 2](src/analysis/s2.md) Demonstrates the analyses to test and visualise hypothesis 2.
+* [Study 1](src/analysis/analysis_s1.md) Demonstrates the analyses to test and visualise hypothesis 1.
+* [Study 2](src/analysis/analysis_s2.md) Demonstrates the analyses to test and visualise hypothesis 2.
 # Code of Conduct
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
