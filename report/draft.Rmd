@@ -45,8 +45,8 @@ author:
   - affiliation: Vrije Universiteit Amsterdam
   - name: André Krouwel
   - affiliation: Vrije Universiteit Amsterdam
-thanks: "Replication files are available on the author's Github account (https://github.com/MarikenvdVelden/temper-tribe); **Current version**: `r format(Sys.time(), '%B %d, %Y')`; **Corresponding author**: M.A.C.G. van der Velden"
-anonymous: FALSE
+thanks: "Replication files are available on the author's Github account (https://anonymous.4open.science/r/temper-tribe-6431/README.md) -- anonomyzed for the review process; **Current version**: `r format(Sys.time(), '%B %d, %Y')`;"
+anonymous: TRUE
 abstract: "_There exists a strong theoretical link between populist attitudes and conspiracy thinking, as both mindsets tap into the vessel of anti-establishment political orientations. We test whether core supporters of populist and extremist parties are more prone to believe in conspiracies than core supporters of mainstream parties. Additionally, we test if citizens that who perceive themselves ideologically more distant to the incumbent government are more conspiratorial than voters that perceive themselves closer to the incumbent(s). Using original data in 5 countries for 8 populit parties, we demonstrate that not all voters for populist parties are the same. If populist parties have government experience, their voters are less likely to engage in conspiracy thinking. Testing the relationship for specific conspiracy beliefs and generic conspiracy mentality while putting populist voters in the center advances the knowledge on how anti-establishment political orientations conditions political behavior._"
 keywords: "Conspiracy Beliefs, Support for Populist Parties, Comparative Analysis"
 geometry: margin=1in
@@ -128,7 +128,7 @@ Quotas for age, gender, and education were included to ensure the representative
 We have `6,013` respondents in the first study and `6,044` in the second study; i.e. about `1,000` respondents per country.[^4]
 We have used the recommendation of **Gerber and Green** to impute missing values with the mean value per country, and indicate if a variable has more than 10% missing values.
 
-[^4]: For an overview of all variables in the studies, as well as the descriptive information on both studies, see the Online Appendix and our [Online Research Compendium](https://github.com/MarikenvdVelden/temper-tribe). 
+[^4]: For an overview of all variables in the studies, as well as the descriptive information on both studies, see the Online Appendix and our [Online Research Compendium](https://anonymous.4open.science/r/temper-tribe-6431/README.md) -- anonoomyzed for the review process. 
 
 **_Dependent Variables._** 
 We measure first the beliefs in specific conspiracies, in this case conspiracies on COVID-19, measured in both studies and secondly, included in study 2, we measure a generic conspiracy mentality.
