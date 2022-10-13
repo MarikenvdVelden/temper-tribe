@@ -1,0 +1,228 @@
+---
+output: 
+  stevetemplates::article:
+    fig_caption: true
+bibliography: references.bib
+urlcolor: black
+linkcolor: black
+header-includes:
+   - \usepackage{floatrow}
+   - \floatsetup[figure]{capposition=top}
+   - \floatsetup[table]{capposition=top}
+   - \usepackage{booktabs}
+   - \usepackage{longtable}
+   - \usepackage{array}
+   - \usepackage{multirow}
+   - \usepackage{wrapfig}
+   - \usepackage{float}
+   - \usepackage{colortbl}
+   - \usepackage{pdflscape}
+   - \usepackage{tabu}
+   - \usepackage[para,online,flushleft]{threeparttable}
+   - \usepackage{threeparttablex}
+   - \usepackage[normalem]{ulem}
+   - \usepackage{makecell}
+   - \usepackage{xcolor}
+   - \usepackage{hyperref}
+   - \usepackage{array}   
+   - \usepackage{caption}
+   - \usepackage{graphicx}
+   - \usepackage{epstopdf}
+   - \usepackage{siunitx}
+   - \usepackage{multirow}
+   - \usepackage{hhline}
+   - \usepackage{calc}
+   - \usepackage{tabularx}
+   - \usepackage{fontawesome}
+   - \usepackage{amsthm}
+   - \newtheorem{hypo}{Hypothesis}
+biblio-style: apsr
+title: "All Tarred with the Same Brush? A Comparative Study of Populist Support Predicting Conspiracy Thinking during the COVID-19 Pandemic"
+author:
+  - name: Mariken A.C.G. van der Velden
+  - affiliation: Vrije Universiteit Amsterdam
+  - name: Alberto López Ortega
+  - affiliation: Vrije Universiteit Amsterdam
+  - name: André Krouwel
+  - affiliation: Vrije Universiteit Amsterdam
+thanks: "Replication files are available on the author's Github account (https://github.com/MarikenvdVelden/temper-tribe); **Current version**: `r format(Sys.time(), '%B %d, %Y')`; **Corresponding author**: M.A.C.G. van der Velden"
+anonymous: FALSE
+abstract: "_There exists a strong theoretical link between populist attitudes and conspiracy thinking, as both mindsets tap into the vessel of anti-establishment political orientations. We test whether core supporters of populist and extremist parties are more prone to believe in conspiracies than core supporters of mainstream parties. Additionally, we test if citizens that who perceive themselves ideologically more distant to the incumbent government are more conspiratorial than voters that perceive themselves closer to the incumbent(s). Using original data in 5 countries for 8 populit parties, we demonstrate that not all voters for populist parties are the same. If populist parties have government experience, their voters are less likely to engage in conspiracy thinking. Testing the relationship for specific conspiracy beliefs and generic conspiracy mentality while putting populist voters in the center advances the knowledge on how anti-establishment political orientations conditions political behavior._"
+keywords: "Conspiracy Beliefs, Support for Populist Parties, Comparative Analysis"
+geometry: margin=1in
+mainfont: cochineal
+fontsize: 11pt
+params:
+  anonymous: ""
+  doublespacing: ""
+doublespacing: TRUE
+endnote: no
+pandocparas: TRUE
+sansitup: FALSE
+
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo = FALSE,
+                      message=FALSE, warning=FALSE)
+options(kableExtra.latex.load_packages = FALSE)
+options(scipen = 1, digits = 2)
+
+# Uncomment below if you want code captions
+# oldSource <- knitr::knit_hooks$get("source")
+# knitr::knit_hooks$set(source = function(x, options) {
+#   x <- oldSource(x, options)
+#   x <- ifelse(!is.null(options$code.cap), paste0(x, "\\captionof{chunk}{", options$code.cap,"}"), x)
+#   ifelse(!is.null(options$ref), paste0(x, "\\label{", options$ref,"}"), x)
+# })
+# Add `chunkcaption: TRUE` to YAML as well.
+```
+
+
+```{r}
+here::i_am("report/draft.Rmd")
+source(here::here("src/lib/functions.R"))
+```
+
+# Introduction
+
+"After our victory, you can raise your heads and finally verbalize what you always believed in" according to Giorgia Meloni, leader of extreme right-wing populist party Fratelli d’Italia, in her speech five days before the 2022 Italian elections.[^1]
+Some of these things Meloni’s followers "have always believed" are conspiracy theories, often propagated by Meloni herself. 
+Her flagship conspiracies incorporate the idea that European bureaucrats are emissaries of George Soros[^2] - evoking the classic anti-Semitic conspiracies of the extreme right [@bergmannIntroduction2018] -, or the creation of the Corona virus in a Chinese laboratory in 2015.[^3] 
+While currently leading the largest party in Italian parliament, her party is certainly not the only one in the country that dedicates itself to spreading conspiratorial accounts. 
+Two other populist parties – the similarly extreme-right Lega and the more centrist 5 Stars Movement - contribute to the spread thereof too [@bertiCharacterAssassinationRightwing2021; @nataleWebWillKill2014]. 
+So have other extremist leaders in several European countries like France, Germany, Netherlands, Hungary, and Slovakia [@onnerforsInternalEnemiesExternal2021; @plentaConspiracyTheoriesPolitical2020; @radnitzWhyDemocracyFuels2022], who exploit conspiracy theories for electoral reasons.
+
+[^1]: https://twitter.com/rulajebreal/status/1572319161145229314?s=20&t=4b0nw05KE9YbpdZSiklXrg
+[^2]: https://www.nytimes.com/2022/09/15/world/europe/giorgia-meloni-italy-right.html
+[^3]: https://twitter.com/GiorgiaMeloni/status/1242875894387138563
+
+Conspiracies permeate the minds of citizens with extremists and populist attitudes with particular ease [@van2022populist]. 
+Populist thinking - characterized by the Manichean thought that there is an evil elite silencing the voice of the real people [@muddePopulismVeryShort2017]-  is fertile ground for thinking that the official accounts of major events are actual lies and deceit   [@sutton14ExaminingMonological2014]. 
+The link between populism and conspiracy belief has been evidenced with multiple studies [@castanhosilvaEliteSomethingExploring2017; @hameleersTheyAreSelling2021; @vanprooijenPopulismPoliticalMentality2018]. 
+A recent study conducted in more than 26 countries has shown that citizens of both political extremes, though mostly on the right, are more likely to believe in conspiracies than ideologically moderate citizens [@imhoffConspiracyMentalityPolitical2022]. 
+Another study has shown such populist attitudes and conspiratorial mindsets are closely linked as both tap into similar anti-establishment sentiments [@van2022populist].
+
+Crises, and their disruptive effect on decision-making elites, are often reflected in the parallel rise of anti-establishment attitudes, populism and conspiracy theories. With the advent of the Corona virus, suspicions about its origin, its distribution and its very existence have been especially welcome among both populist leaders and voters  [@bertiPopulismScienceCovid192022; @eberlPopulismPlandemicWhy2021]. Anti-science conspiracies and populism are a traditional marriage that has included skepticism about climate change, resistance to GMOs, or the anti-vaccine movement  [@steculaHowPopulismConservative2021]. Geopolitical crises, such as Russia’s invasion of Ukraine, have also resulted in conspiratorial accounts from populist leaders, suggesting that globalists are attempting to replace the Christian people of Europe with more 'docile immigrants'. Extremist, far-right and populist leaders see Putin’s Russia as a model to make Western democracies less pluralistic and ‘weak’ [@oliker2017putinism; @albertazzi2013populism; @tarchi2015italy; @verbeek2016italy; @eksi2019right; @weiss2020limits].
+
+Early studies in the US found an association between conspiracy belief and political party affiliation, with right-wing and conservative Republicans being more conspiratorial [@wright1974interpersonal; @oliver2014medical], yet recent studies find less clear partisan patterns [@uscinski2014american]. 
+Logically, many voters are more likely to think that parties they did not support for are involved in malevolent activities than representatives of the party they support [@claassen2016motivated], indicating in incumbent/party choice effect. Such effects are found in Poland, where the radical right conservative government of _PiS_ results in lower conspiracy belief on the right and more conspiratorial attitudes by supporters of the opposition parties. This incumbent/opposition effect may also be at play when we look at staunch left-wing opposition parties like the _Socialistische Partij_ (SP) in the Netherlands and _Vänsterpartiet_ (V) in Sweden, _Alternativet and Enhedslisten_ (AE) in Denmark and _Die Linke_ in German, whose supporters all show higher inclinations for conspiracy belief. Feeling that the party you support is structurally being excluded from power might trigger strong anti-establishment attitudes) Thus, because it is difficult to entangle whether it is the strength of political convictions (extremism) or the feeling that your party is excluded from executive power, we investigate both these explanations for strong anti-establishment sentiments of both populist and opposition parties, leading to the two guiding hypotheses of this paper: 
+
+> **H1**: _Voters/supporters of populist parties and extremist parties will be more prone to conspiracy thinking than voters/supporters of system/mainstream parties_
+
+> **H2**: _Voters that see more distance between themselves and the incumbent government party/parties are more likely to believe in conspiracies than voters that position themselves closer to the incumbent(s)_  
+
+This study contributes to knowledge about the relationship between populism and conspiracy thinking in three ways. First, it puts the focus on populist voters rather than on populist attitudes. Although, as previous research has shown, the mindset explains part of the relationship between populism and conspiracies, the role of parties and leaders is also especially key. Not only because populist parties and leaders play an active role in the spread of conspiracies, but because we know that communications from like-minded political figures impact public opinion disproportionately, especially in times of high partisan animus [@lenzFollowLeaderHow2013; @masonUncivilAgreementHow2018].
+
+Second, our study considers conspiracies from two different perspectives. On the one hand, it focuses on conspiracy mentality - that is, the abstract tendency to accept the validity of conspiracies. This allows us to understand and compare the level of general conspiratorial thinking of voters of populist and non-populist parties. On the other hand, we also investigated the level of penetration of specific COVID-19 conspiracies, unique to the multiple ways in which they can be originated [@hartmanDifferentConspiracyTheories2021].
+
+Third, this study is comparative of voters of eight European populist parties, covering both Southern Europe (Vox in Spain, M5E, Lega and Fratelli d'Italia in Italy), Western Europe (SD in Sweden, RN in France and AfD in Germany), and Eastern Europe (PiS in Poland) at two points in time, before and after the outbreak of COVID-19.
+
+# Data, Measures, and Methods of Estimation
+
+To investigate how the COVID-19 pandemic has affected the relationship between support for populist parties and the belief in both specific conspiracies as well as a generic conspiratorial mentality, we have conducted two studies in six countries: Germany, France, Italy, Poland, Spain, and Sweden.
+The first study is conducted in November 2020 and the second study approximately a year later, in October 2021. 
+The first data set is collected by Dynata and the second data set is collected by _KiesKompas_, both together with the _Instituto Cattaneo_. 
+Quotas for age, gender, and education were included to ensure the representativeness of the sample. 
+We have `6,013` respondents in the first study and `6,044` in the second study; i.e. about `1,000` respondents per country.[^4]
+We have used the recommendation of **Gerber and Green** to impute missing values with the mean value per country, and indicate if a variable has more than 10% missing values.
+
+[^4]: For an overview of all variables in the studies, as well as the descriptive information on both studies, see the Online Appendix and our [Online Research Compendium](https://github.com/MarikenvdVelden/temper-tribe). 
+
+**_Dependent Variables._** 
+We measure first the beliefs in specific conspiracies, in this case conspiracies on COVID-19, measured in both studies and secondly, included in study 2, we measure a generic conspiracy mentality.
+`Covid Conspiracy Beliefs` is measured with four statements[^5] where people are asked to rate them as `true` (value of `1`) or `false` (value of `0`). 
+We have created an additive index, where a value of `4` indicates a high belief in Covid conspiracies, and a value of `0` indicates that a respondent has no Covid conspiracy beliefs. `Generic Conspicay Mentality` is measured using the PICOM scale [@bruder2013measuring], which consists of five items[^6] for which participants have to assess the likelihood 11-point Likert scale ranging from certainly not likely (value of `0`) till certainly likely (value of `10`). 
+We have scaled the items using the mean score.
+Table A.1 in the Online Appendix (OA) demonstrates the descriptive information and Figure A.1 in the OA visualizes the Cronbach's alpha per country for both dependent variables.
+
+[^5]: These statements are 1) _the virus is a biological weapon intentionally released by China_; 2) _5G technology is causing the Corona virus to spread faster_; 3) _the Corona virus has been spread by mulltinational pharmaceutical companies, now ready to make huge profits by selling vaccines_; 4) _the Corona virus is a hoax_.
+[^6]: These items are 1) _Many very important things happen in the world, which the public is never in-formed about_; 2) _Politicians usually do not tell us the true motives for their decisions_; 3) _Government agencies closely monitor all citizens_; 4) _Events which superficially seem to lack a connection are often the result of secret activities_; 5) _There are secret organizations that greatly influence political decisions_.
+
+**_Independent Variables of Interest._** 
+To test support for populist parties (H1), we use four separate indicators: `Populist Party Identity`, `Populist Vote Last Election`, `Populist Vote Intention`, `PTV for Populist Party`.
+`Populist Party Identity` is measured using the question _Do you consider yourself to be close to any particular party? If so, which party do you feel close to?_.
+If the parties _AfD_ (Germany), _Resamblement National_ (France), _Lega Salvini Premier_, _Movimento 5 Stelle_, _Fratelli d'Italia_ (Italy), _Prawo i Sprawiedliwoś_ (Poland), _Vox_ (Spain), or _Sverigedemokraterna_ (Sweden) are selected, respondents get a value of `1` and otherwise a value of `0`.
+The same measurement is applied to respondents indicating that they either have voted or are intended to vote for these parties to measure `Populist Vote Last Election` and `Populist Vote Intention`.
+To measure `PTV for Populist Party`, we apply a 11-point scale for the parties indicated above, where a value of `0` indicates that a respondent is very unlikely to ever vote for this party, and a value of `10` indicates that a respondent is very likely to ever vote for this party. 
+Table A.2 in the OA demonstrates the descriptive information per party.
+Populist Identity and Populist Vote Last Elections is available in both studies, the other two measures are only available in Study 2. 
+
+To focus on the anti-elite aspect of populism (H2), we look at the ideological distance from the government. 
+We measure this using eight operationalizations of this concept: we look at the mean and median ideological distance of the government parties as determined by the respondents as well as determined by the sample, culminating into four measures.
+We use the absolute distance between ideological left-right self-placement and party placement on an 11-point scale (value of `0` indicates left, value of `10` indicates right).
+We do the same for a specific Covid 11-point scale[^7]. 
+These eight measures are only available for study 1. 
+Tables A.3, A.4, and A.5 in the OA demonstrate the descriptive information per country.
+
+[^7]: _In your opinion, in the context of a pandemic crisis, is it better to establish all the restrictions that could preserve public health or is it better to leave economic activities open to protect jobs? Please answer on a score from 0 (preserve public health) -10 (leave economic activities open to protect jobs)._
+
+**_Control Variables._**
+In our analysis, we control for demographic information (gender, age, education, income, religion, job) as well as political background variables (trust in politics, ideological position on economic left-right scale and cultural progressive-conservative scale, and evaluations and prospects of the economy). 
+Tables A.5 till A.17 in the OA demonstrate the descriptive information per country.
+
+**_Methods of Estimation._**
+Since we construct several options to measure our theoretical constructs, choosing which ones or which combinations to include in the main analyses and robustness checks typically comes with researchers’ degrees of freedom [@simmons2016false]. Therefore, our data does not consist of a single data set necessary to test our hypotheses, but to multiple alternatively processed data sets, depending on the specific combination of choices — a many worlds or multiverse of data sets [@simonsohn2019specification, p.702]. Each combination
+of independent variables can lead to different outcomes of the statistical model. 
+Hence, rather than modeling some separate 'single data sets', we choose to model the multiverse of data sets [@simonsohn2019specification], also referred to as the specification curve _p_[@steegen2016increasing]. 
+Moreover, there are stricter and less strict ways to handle observational data for effects analysis.
+We use OLS regressions on four different processed data sets: the survey data with imputed missing values, the survey data with with row-wise deleted missing values; propensity-score matched data; and weigthed propensity-score matched data.
+We use the R package `specr` [@masur2020specr] to estimate the effect of each different combination of independent variables to explain belief in conspiracies.
+
+# All Tarred with the Same Brush?
+
+```{r results-h1, out.width = "100%", fig.align = 'center', fig.cap = "\\label{fig:results-h1}Support for Populist Parties Predicting Conspiracy Thinking"}
+include_graphics(here("report/figures", "testing-h1-1.png"))
+```
+
+To investigate whether supporters of populist parties are tarred with the same brush when it comes to their conspiracy thinking, Figure \ref{fig:results-h1} demonstrates that this is not the case. 
+While supporters of the German _Alternative für Deutschland_, French _Rassemblent National_, Italian _Lega Salvini Premier_, Spanish _Vox_, and Swedish _Sverigedemokraterna_ behave in the same way: Compared to non-supporters, they report higher levels of Covid Conspiracy beliefs (left- and middle columns of Figure \ref{fig:results-h1}) as well as higher levels of general conspiracy mentality (right column of Figure \ref{fig:results-h1}) across the different modeling techniques.[^8]
+Supporters of the Italian parties _Fratelli d'Italia_ and _Movimento 5 Stella_ and the Polish _Prawo i Sprawiedliwoś_ however, show a different pattern.
+For supporters of _Movimento 5 Stella_ and _Fratelli d'Italia_, we do not find a statistical significant relationship with conspiracy thinking across measures and modeling techniques; neither for the Covid specific one, nor the general mentality. 
+For supporters of _Prawo i Sprawiedliwoś_, Figure \ref{fig:results-h1} shows no significant relationship with Covid conspiracy beliefs across measures and modeling techniques, yet a negative and significant relationship with general conspiracy mentality.
+This indicates that those who support the Polish populist are less likely to have a general conspiracy mentality.
+This difference between the behavior of supporters for _Prawo i Sprawiedliwoś_, _Movimento 5 Stella_ and _Fratelli d'Italia_ and the supporters of the other European populist parties could be the government experience of these parties.[^9]
+They could therefore be perceived as part of the evil elite, and those who are prone to conspiracy thinking, do not vote anymore for these parties.
+Overall, we see support for H1 in Figure \ref{fig:results-h1}. 
+However, the stricter the causal modeling in the third and forth row (Propensity Score Matching (PSM) and Weighted PSM) of Figure \ref{fig:results-h1} shows that only for Spain (supporters of _Vox_) and Germany (supporters of _Alternative für Deutschland_) the relationship between populist support and conspiracy thinking is robust across measures. 
+One other notable result of Figure \ref{fig:results-h1} is that measuring populist support with `propensity to vote` yields smaller effects than using `vote recall`, `vote intention` or `party identity` questions. 
+
+[^8]: The Italian _Lega Salvini Premier_ has insignificant results for some of the models, but the majority of the models predicting the relationship between supporting _Lega Salvini Premier_ and general conspiracy mentality is significant and positive.
+[^9]: _Fratelli d'Italia_ is a split off of Berlusconi's party _Il Popolo della Libertà_ which governed Italy between 2008 and 2011.
+
+To delve a bit deeper into the relationship between government experience of parties and conspiracy thinking, we run a regression predicting conspiracy thinking with distance towards the government position based on Covid policies in the left column of Figure \ref{fig:results-h2} and based on ideology (left-right) in the right column of Figure \ref{fig:results-h2}.
+Regardless of modeling choices, we see for most operationalizations of the independent variable `distance from the government` based on Covid policies[^10] that there is a positive and significant relationship.
+This indicates that those who position themselves further away from the government, i.e. those who deflect from the elite, are more likely to belief in Covid-related conspiracies.
+This effect is most pronounced in Italy, which was the country that was hit hardest with Covid-19 in its first wave, and therefore where the restrictions set by the government were strictest.
+Looking at the right-hand side of Figure \ref{fig:results-h2}, we see that for all countries but Poland, there is a significant and positive relationship between placing yourself further from the government on an ideological left-right scale and conspiracy thinking. 
+While the effect differs in size, this finding holds across modeling techniques and operationalizations.
+For Poland, governed by the populist party _Prawo i Sprawiedliwoś_, we see the opposite.
+The further you place yourself from the government, despite it being a populist, i.e. anti-elite, party, the more likely you are to be prone to conspiracy thinking. 
+This holds accross modeling techniques and operationalizations.
+
+[^10]: For some models using the distance based on the respondents mean or median psition from the government, we find insignificant results for the supporters of the German _Alternative f{\"u}r Deutschland_, the French _Rassemblent National_, and the Swedish _Sverigedemokraterna_. 
+
+```{r results-h2, out.width = "100%", fig.align = 'center', fig.cap = "\\label{fig:results-h2}Distance towards Government Predicting Conspiracy Thinking"}
+include_graphics(here("report/figures", "testing-h2-1.png"))
+```
+
+# Conclusion
+Previous research found a relationship between extremist and populist attitudes, especially at the political right-wing, and belief in conspiracies. 
+This paper delves deeper into this association between anti-establishment sentiments – both part-and-parcel of populism and conspiracy belief – by bringing partisanship into the equation. 
+A fundamental factor to understand this linkage lies in the pivotal role populist leaders play in proselytizing conspiracies. 
+Hence, we assess to what extent conspiratorial mindsets and support for eigth populist parties is related in five European countries: _AfD_ (Germany), _Resamblement National_ (France), _Lega Salvini Premier_, _Movimento 5 Stelle_, _Fratelli d'Italia_ (Italy), _Prawo i Sprawiedliwoś_ (Poland), _Vox_ (Spain), or _Sverigedemokraterna_ (Sweden). 
+Our theory revolves around two axes: first, based on the common anti-elitist character of populism and conspiracy thinking, we hypothesize that supporters of extreme-right populist parties are more likely to believe in conspiracy theories. 
+Second, we reason that this relationship is conditioned by the incumbency or opposition status of these populist parties. 
+If populists are the (political) incumbent, populist voters will be less likely to believe in conspiracies hatched by ‘evil elites’.
+To test our assumptions, we model a multiverse of operationalizations of our key concepts, capable of iterating different tests of the same assumptions. We vary the way we measure the independent variable (voting intention, recall and vote propensity), the dependent variable (using a general conspiracy mentality measure as well as beliefs in COVID conspiracies) and the statistical models.
+The results yield conclusions that confirm our first hypothesis. Regardless of the model we use, in general we find that populist support predicts belief in conspiracies. However, we find important variations from this general rule. Three parties deviate: _Lega_ and _M5S_ in Italy and _PiS_ in Poland. This seems to suggest that where right-wing extreme parties stand a chance of forming a government – either singlehandedly or in a coalition – its supporters feel that the elite is replaceable and not consistently working against them.  ‘Their’ party is or can become an incumbent. Supporters of parties with much less (national) coalition and governing potential – such as _Vox_ and _AfD_  - have the highest inclinations to believe in conspiracies.
+
+A more robust test of our second hypothesis is our assessment of self-placement in relation to the incumbent parties to see if closeness to government reduces conspiracy belief. Consistent with our expectations we find that in Spain, Sweden, Germany and Italy placing yourself far from the government indeed predicts conspiratorial attitudes. This is particularly strong in Italy, where there was an imposed (or not directly elected by voters) government. Poland, where the populist _PiS_ governs, is the odd one out: here it is actually those who support the populists are less inclined to belief in conspiracies. 
+
+The results have four implications for students of populism and conspiracy thinking. First, that populist voting is consistently indissociably from belief in conspiracies. Second, that in most cases COVID conspiracies are a similar predictor of general conspiracy thinking, reinforcing pre-existing political divisions rather than creating new ones. Third, that at the moment populists come to power, as in the Polish case, the association between populism and conspiratorial thinking weakens or reverses. Fourth, and finally, the extent to which disruptive crises impact on the country may weaken the link between populism and conspiracy beliefs, as in the Italian case where support for _Fratelli d'Italia_ or _M5S_ shows a weak relationship with conspiracy thinking. In future studies, it would be interesting to delve deeper into the differences between populist electorates and the factors that cause these differences, especially in countries like Italy with an increasingly fragmented electorate. 
+
+\newpage
+# References
+
+

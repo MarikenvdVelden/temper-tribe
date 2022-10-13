@@ -1,0 +1,260 @@
+# Conduct Multiverse S1
+
+#matched data - not weighted S1
+m2a <- run_specs(df = ds1m, 
+                 y = c("covidconsp_index"), 
+                 x = c("government_distanter_median", 
+                       "government_distanter_mean",
+                       "covidgovernment_distanter_median",
+                       "covidgovernment_distanter_mean", 
+                       "generalgovernment_distanter_median", 
+                       "generalgovernment_distanter_mean",
+                       "generalcovidgovernment_distanter_median", 
+                       "generalcovidgovernment_distanter_mean"), 
+                 model = c("lm"), 
+                 controls = c("gender", "age", "education", #controls
+                              "income", "religion",
+                              "job", "trust_index", "role_state_economy",
+                              "cult_immigration", "gender_workforce",
+                              "impact_climate", "economic_eval",
+                              "economic_prospect"),
+                 subsets = list(country = unique(ds1m$country))) %>% 
+  mutate(study = "Study 1: Covid Conspiracy Beliefs",
+         sample = "PSM",
+         study2 = recode(x,
+                         `government_distanter_median` = "Ideology-Based",
+                         `government_distanter_mean` = "Ideology-Based",
+                         `covidgovernment_distanter_median` = "COVID-Based",
+                         `covidgovernment_distanter_mean` = "COVID-Based",
+                         `generalgovernment_distanter_median` = "Ideology-Based",
+                         `generalgovernment_distanter_mean` = "Ideology-Based",
+                         `generalcovidgovernment_distanter_median` = "COVID-Based",
+                         `generalcovidgovernment_distanter_mean` = "COVID-Based"),
+         subsets = recode(subsets,
+                          `all` = "Support for ...",
+                          `country = DE` = "Germany (N = 399)",
+                          `country = FR` = "France (N = 495)",
+                          `country = PL` = "Poland (N = 863)",
+                          `country = SW` = "Sweden (N = 661)",
+                          `country = SP` = "Spain (N = 716)",
+                          `country = IT` = "Italy (N = 1184)"),
+         subsets = factor(subsets,
+                          levels = c("Sweden (N = 661)",
+                                     "Spain (N = 716)",
+                                     "Poland (N = 863)",
+                                     "Italy (N = 1184)",
+                                     "France (N = 495)",
+                                     "Germany (N = 399)",
+                                     "Support for ...")))
+
+#matched data - weighted S1
+m2b <- run_specs(df = ds1mw, 
+                 y = c("covidconsp_index"), 
+                 x = c("government_distanter_median", 
+                       "government_distanter_mean",
+                       "covidgovernment_distanter_median",
+                       "covidgovernment_distanter_mean", 
+                       "generalgovernment_distanter_median", 
+                       "generalgovernment_distanter_mean",
+                       "generalcovidgovernment_distanter_median", 
+                       "generalcovidgovernment_distanter_mean"),                 
+                 model = c("lm"), 
+                 controls = c("gender", "age", "education", #controls
+                              "income", "religion",
+                              "job", "trust_index", "role_state_economy",
+                              "cult_immigration", "gender_workforce",
+                              "impact_climate", "economic_eval",
+                              "economic_prospect"),
+                 subsets = list(country = unique(ds1mw$country))) %>% 
+  mutate(study = "Study 1: Covid Conspiracy Beliefs",
+         sample = "Weighted PSM",
+         study2 = recode(x,
+                         `government_distanter_median` = "Ideology-Based",
+                         `government_distanter_mean` = "Ideology-Based",
+                         `covidgovernment_distanter_median` = "COVID-Based",
+                         `covidgovernment_distanter_mean` = "COVID-Based",
+                         `generalgovernment_distanter_median` = "Ideology-Based",
+                         `generalgovernment_distanter_mean` = "Ideology-Based",
+                         `generalcovidgovernment_distanter_median` = "COVID-Based",
+                         `generalcovidgovernment_distanter_mean` = "COVID-Based"),
+         subsets = recode(subsets,
+                          `all` = "Support for ...",
+                          `country = DE` = "Germany (N = 396)",
+                          `country = FR` = "France (N = 490)",
+                          `country = PL` = "Poland (N = 866)",
+                          `country = SW` = "Sweden (N = 654)",
+                          `country = SP` = "Spain (N = 739)",
+                          `country = IT` = "Italy (N = 1173)"),
+         subsets = factor(subsets,
+                          levels = c("Sweden (N = 654)",
+                                     "Spain (N = 739)",
+                                     "Poland (N = 866)",
+                                     "Italy (N = 1173)",
+                                     "France (N = 490)",
+                                     "Germany (N = 396)",
+                                     "Support for ...")))
+
+#data -  not weighted S1
+m2c <- run_specs(df = s1, 
+                 y = c("covidconsp_index"), 
+                 x = c("government_distanter_median", 
+                       "government_distanter_mean",
+                       "covidgovernment_distanter_median",
+                       "covidgovernment_distanter_mean", 
+                       "generalgovernment_distanter_median", 
+                       "generalgovernment_distanter_mean",
+                       "generalcovidgovernment_distanter_median", 
+                       "generalcovidgovernment_distanter_mean"),                
+                 model = c("lm"), 
+                 controls = c("gender", "age", "education", #controls
+                              "income", "religion",
+                              "job", "trust_index", "role_state_economy",
+                              "cult_immigration", "gender_workforce",
+                              "impact_climate", "economic_eval",
+                              "economic_prospect"),
+                 subsets = list(country = unique(s1$country))) %>% 
+  mutate(study = "Study 1: Covid Conspiracy Beliefs",
+         sample = "Survey Data",
+         study2 = recode(x,
+                         `government_distanter_median` = "Ideology-Based",
+                         `government_distanter_mean` = "Ideology-Based",
+                         `covidgovernment_distanter_median` = "COVID-Based",
+                         `covidgovernment_distanter_mean` = "COVID-Based",
+                         `generalgovernment_distanter_median` = "Ideology-Based",
+                         `generalgovernment_distanter_mean` = "Ideology-Based",
+                         `generalcovidgovernment_distanter_median` = "COVID-Based",
+                         `generalcovidgovernment_distanter_mean` = "COVID-Based"),
+         subsets = recode(subsets,
+                          `all` = "Support for ...",
+                          `country = DE` = "Germany (N = 1003)",
+                          `country = FR` = "France (N = 1002)",
+                          `country = PL` = "Poland (N = 1001)",
+                          `country = SW` = "Sweden (N = 1005)",
+                          `country = SP` = "Spain (N = 1000)",
+                          `country = IT` = "Italy (N = 1401)"),
+         subsets = factor(subsets,
+                          levels = c("Sweden (N = 1005)",
+                                     "Spain (N = 1000)",
+                                     "Poland (N = 1001)",
+                                     "Italy (N = 1401)",
+                                     "France (N = 1002)",
+                                     "Germany (N = 1003)",
+                                     "Support for ...")))
+
+#data -  not weighted S1 no missings
+m2d <- run_specs(df = s1m, 
+                 y = c("covidconsp_index"), 
+                 x = c("government_distanter_median", 
+                       "government_distanter_mean",
+                       "covidgovernment_distanter_median",
+                       "covidgovernment_distanter_mean", 
+                       "generalgovernment_distanter_median", 
+                       "generalgovernment_distanter_mean",
+                       "generalcovidgovernment_distanter_median", 
+                       "generalcovidgovernment_distanter_mean"),                
+                 model = c("lm"), 
+                 controls = c("gender", "age", "education", #controls
+                              "income", "religion",
+                              "job", "trust_index", "role_state_economy",
+                              "cult_immigration", "gender_workforce",
+                              "impact_climate", "economic_eval",
+                              "economic_prospect"),
+                 subsets = list(country = unique(s1m$country))) %>% 
+  mutate(study = "Study 1: Covid Conspiracy Beliefs",
+         sample = "Survey Data (No Missings >10%)",
+         study2 = recode(x,
+                         `government_distanter_median` = "Ideology-Based",
+                         `government_distanter_mean` = "Ideology-Based",
+                         `covidgovernment_distanter_median` = "COVID-Based",
+                         `covidgovernment_distanter_mean` = "COVID-Based",
+                         `generalgovernment_distanter_median` = "Ideology-Based",
+                         `generalgovernment_distanter_mean` = "Ideology-Based",
+                         `generalcovidgovernment_distanter_median` = "COVID-Based",
+                         `generalcovidgovernment_distanter_mean` = "COVID-Based"),
+         subsets = recode(subsets,
+                          `all` = "Support for ...",
+                          `country = DE` = "Germany (N = 990)",
+                          `country = FR` = "France (N = 994)",
+                          `country = PL` = "Poland (N = 997)",
+                          `country = SW` = "Sweden (N = 1000)",
+                          `country = SP` = "Spain (N = 994)",
+                          `country = IT` = "Italy (N = 1398)"),
+         subsets = factor(subsets,
+                          levels = c("Sweden (N = 1000)",
+                                     "Spain (N = 994)",
+                                     "Poland (N = 997)",
+                                     "Italy (N = 1398)",
+                                     "France (N = 994)",
+                                     "Germany (N = 990)",
+                                     "Support for ...")))
+
+h2 <- m2a %>% 
+  add_case(m2b) %>% 
+  add_case(m2c) %>% 
+  add_case(m2d) %>% 
+  mutate(x = recode(x,
+                    `government_distanter_median` = "Ideological Distance from Median Government Position (R)",
+                    `government_distanter_mean` = "Ideological Distance from Mean Government Position (R)",
+                    `covidgovernment_distanter_median` = "Distance from Median (R) on COVID Government Position",
+                    `covidgovernment_distanter_mean` = "Distance from Mean (R) on COVID Government Position",
+                    `generalgovernment_distanter_median` = "Ideological Distance from Median Government Position (S)",
+                    `generalgovernment_distanter_mean` = "Ideological Distance from Mean Government Position (S)",
+                    `generalcovidgovernment_distanter_median` = "Distance from Median (S) on COVID Government Position",
+                    `generalcovidgovernment_distanter_mean` = "Distance from Mean (S) on COVID Government Position"),
+         sample = factor(sample,
+                         levels = c("Survey Data",
+                                    "Survey Data (No Missings >10%)",
+                                    "PSM",
+                                    "Weighted PSM")),
+         estimate = ifelse(subsets == "Support for ...", NA, estimate),
+         conf.low = ifelse(subsets == "Support for ...", NA, conf.low),
+         conf.high = ifelse(subsets == "Support for ...", NA, conf.high)) %>% 
+  filter(subsets != "Support for ...") %>% 
+  ggplot(aes(x = estimate,
+             y = subsets,
+             color = x,
+             xmin = conf.low,
+             xmax = conf.high)) +
+  geom_point(alpha = 0.2, position = position_dodge(0.9),
+             size = 2) +
+  geom_errorbar(alpha = 0.2, position = position_dodge(0.9),
+                width = 0) +
+  facet_grid(sample ~ study2,
+             scales = "free") +
+  theme_ipsum() +
+  labs(y="", x= "Estimated Predictions for Covid Conspiracy Beliefs (Study 1)",
+       caption = "Notes: \n PSM = Propensity Score Matching \n (R) = based on respondent \n (S) = based on sample") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.position="bottom",
+        legend.title = element_blank()) +
+  scale_color_manual(values = fig_cols) +
+  geom_vline(xintercept = 0.0, linetype = "dashed", 
+             size = .5, color = "gray20") +
+  guides(color=guide_legend(ncol=2,byrow=TRUE))
+
+ms1 <- m6a %>% 
+  add_case(m6b) %>% 
+  add_case(m6c) %>% 
+  add_case(m6d) %>% 
+  filter(subsets != "all") %>%
+  mutate(sign = ifelse(p.value <0.05, "Statistically Significant",
+                       "Not Statistically Significant"),
+         subsets = recode(subsets,
+                          `all` = "All Populist Parties",
+                          `pop_party = AfD` = "AfD (Germany, N = 1003)",
+                          `pop_party = Rassemblement national` = "Rassemblement National (France, N = 1002)",
+                          `pop_party = Prawo i Sprawiedliwość` = "Prawo i Sprawiedliwoś (Poland, N = 1002)",
+                          `pop_party = Sverigedemokraterna` = "Sverigedemokraterna (Sweden, N = 1005)",
+                          `pop_party = Vox` = "Vox (Spain, N = 1000)",
+                          `pop_party = Lega Salvini Premier` = "Lega Salvini Premier (Italy, N = 1002)",
+                          `pop_party = Movimento 5 Stelle` = "Movimento 5 Stelle (Italy, N = 1002)",                          
+                          `pop_party = Fratelli d'Italia` = "Fratelli d'Italia (Italy, N = 1002)")) %>% 
+  group_by(subsets,sign) %>% 
+  count() %>% 
+  ungroup() %>% 
+  select(Party = subsets,
+         sign, n) %>% 
+  pivot_wider(names_from = sign,
+              values_from = n) %>% 
+  mutate(`Not Statistically Significant` = replace_na(`Not Statistically Significant`, 0),
+         Study = "Study 1: Covid Conspiracy Beliefs")

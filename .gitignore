@@ -52,3 +52,5 @@ packrat/src/
 data/tmp
 data/raw-private
 src/.DS_Store
+
+docs/

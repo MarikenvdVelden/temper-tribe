@@ -1,0 +1,154 @@
+---
+title: 'Prepare Data Pilot Studies'
+author: 
+output: 
+  github_document:
+    toc: yes
+always_allow_html: true
+editor_options: 
+  
+  chunk_output_type: console
+---
+
+```{r "setup", include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
+                      fig.align = "center",
+                      fig.path=('../../report/figures/'))
+library(printr)
+options(digits = 2)
+library(rmarkdown)
+```
+
+## Required Packages &amp; Reproducibility
+```{r "env", message=FALSE, warning=F}
+rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
+source(here::here("src/lib/functions.R"))
+#renv::snapshot()
+```
+
+## Tidy Data
+This code chuck downloads the data from cleans the raw data. We impute missing values based on the following criteria:
+
+- If 10\% or less of the values on the dimension are missing, then we re-code the missing values to the overall mean. 
+- If 11\% or more of the values on the dimension are missing, then we re-code the missing values to a constant (for instance 0) and include a dummy variable indicating whether the response on the covariate was missing or not.
+
+We recoded the missing values of the conspiracy belief variables, age, gender, and ideology to the mean value of the respective variables.
+For the conspiracy belief variables as well as for the ideology variable, we additionally add a dummy variable indicating whether this variable was missing.
+
+```{r "clean data for catteneo", message=FALSE}
+source(here("src/data-processing/combine_Cattaneo.R"))
+save(df, file = here("data/intermediate/cleaned_catteneo.RData"))
+```
+
+```{r "scaling variables"}
+alpha
+```
+
+## Save Data for Analysis
+```{r "save data"}
+save(w1, file = here("data/intermediate/cleaned_catteneo_w1.RData"))
+save(w2, file = here("data/intermediate/cleaned_catteneo_w2.RData"))
+```
+
+## Visualization of Data
+
+
+### Dependent Variable
+```{r "Dependent Variable Obs", echo=F, fig.width=18, fig.height=18}
+d <- w2 %>% 
+  select(`Index: Generic Conspiracy Mentality` = picom_index,
+         `Index: COVID-19 Conspiracy Beliefs` = covidconsp_index,
+         Country = country)
+ggpairs(d,
+  upper = list(combo = "count"),
+  lower = list(continuous = "density", combo = "box_no_facet"),
+  diag = list(continuous = "blankDiag",
+              discrete = "blankDiag"),
+  ggplot2::aes(colour=Country, alpha = 0.5),
+  columns = 1:3) +
+  scale_fill_manual(values = fig_cols) +
+  scale_colour_manual(values = fig_cols) +
+  theme_ipsum()
+```
+
+### Independent Variables 
+```{r "Independent Variables H1", echo=F, message=FALSE, warning=FALSE,fig.width=18, fig.height=18}
+d <- w2 %>% 
+  mutate(pop_ptv = round(pop_ptv, 0),
+         pop_vote_intention = recode(pop_vote_intention,
+           `0` = "Not RRWPP",
+           `1` = "RRWPP"),
+         pop_vote_recall = recode(pop_vote_recall,
+           `0` = "Not RRWPP",
+           `1` = "RRWPP"),
+         pop_pid = recode(pop_pid,
+           `0` = "Not RRWPP",
+           `1` = "RRWPP")) %>% 
+  select(`PTV` = pop_ptv, 
+         `Vote Intention` = pop_vote_intention,
+         `Vote Recall` = pop_vote_recall, 
+         `PID` = pop_pid,
+        #`Populist Attitudes` = populism_index,
+         Country = country) %>% 
+  drop_na()
+
+ggpairs(d,
+  upper = list(#continuous = "smooth",
+               combo = "count",
+               alpha = 0.5),
+  lower = list(continuous = "cor", 
+               combo = "box_no_facet",
+               #discrete = "facetbar",
+               alpha = 0.5),
+  diag = list(continuous = "blankDiag",
+              discrete = "blankDiag"),
+  ggplot2::aes(colour=Country,alpha = 0.5), 
+#  columns = c(1:4),
+  #legend = c(1,4)
+) +
+  scale_fill_manual(values = fig_cols) +
+  scale_colour_manual(values = fig_cols) +
+  theme_ipsum() +
+  theme(plot.title = element_text(hjust = 0.5),
+                       legend.position="bottom",
+                       legend.title = element_blank())
+```
+
+```{r "Independent Variables H2", echo=F, message=FALSE, warning=FALSE,fig.width=18, fig.height=18}
+d <- w1 %>% 
+  select(`Ideological Distance from Median Government Position (R)` = government_distanter_median,
+                    `Ideological Distance from Mean Government Position (R)` = government_distanter_mean,
+                    `Distance from Median (R) on COVID Government Position` = covidgovernment_distanter_median,
+                    `Distance from Mean (R) on COVID Government Position` = covidgovernment_distanter_mean,
+                    `Ideological Distance from Median Government Position (S)` = generalgovernment_distanter_median,
+                    `Ideological Distance from Mean Government Position (S)` = generalgovernment_distanter_mean,
+                    `Distance from Median (S) on COVID Government Position` = generalcovidgovernment_distanter_median,
+                    `Distance from Mean (S) on COVID Government Position` = generalcovidgovernment_distanter_mean,
+         Country = country) %>% 
+  drop_na()
+
+ggpairs(d,
+  upper = list(continuous = "cor",
+               combo = "count",
+               alpha = 0.5),
+  lower = list(continuous = "cor", 
+               combo = "box_no_facet",
+               #discrete = "facetbar",
+               alpha = 0.5),
+  diag = list(continuous = "blankDiag",
+              discrete = "blankDiag"),
+  ggplot2::aes(colour=Country,alpha = 0.5), 
+#  columns = c(1:4),
+  #legend = c(1,4)
+) +
+  scale_fill_manual(values = fig_cols) +
+  scale_colour_manual(values = fig_cols) +
+  theme_ipsum() +
+  theme(plot.title = element_text(hjust = 0.5),
+                       legend.position="bottom",
+                       legend.title = element_blank())
+```
+
+
+
+

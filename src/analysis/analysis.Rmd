@@ -1,0 +1,120 @@
+---
+title: 'Data Analysis'
+author: 
+output: 
+  github_document:
+    toc: yes
+  #pdf_document:
+  #  dev: cairo_pdf
+always_allow_html: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r "setup", include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE,
+                      fig.align = "center",
+                      fig.path=('../../report/figures/'))
+library(printr)
+options(digits = 2)
+library(rmarkdown)
+```
+
+```{r "env", message=FALSE, warning=F}
+rm(list = ls(all.names = TRUE)) #will clear all objects includes hidden objects.
+source(here::here("src/lib/functions.R"))
+#renv::snapshot()
+```
+
+```{r "get data"}
+load(here("data/intermediate/cleaned_catteneo_w1.RData"))
+load(here("data/intermediate/cleaned_catteneo_w2.RData"))
+```
+
+## H1: Voters/supporters of populist parties and extremist parties will be more prone to a conspiracy mentality than voters/supporters of system/mainstream parties
+
+### Main Independent Variables
+- Populist Party Identity: _Do you consider yourself to be close to any particular party? If so, which party do you feel close to?_ AfD (DE), FN (FR), Ln, M5S, FdI (IT), PiS (PL), Vox (SP), SD (SW) selected  == `1`, otherwise `0`;
+- Populist Vote Last Election: Voted last national elections for AfD (DE), FN (FR), Ln, M5S, FdI (IT), PiS (PL), Vox (SP), SD (SW)  == `1`, otherwise `0`;
+- Populist Vote Intention: Vote if elections were held tomorrow for AfD (DE), FN (FR), Ln, M5S, FdI (IT), PiS (PL), Vox (SP), SD (SW)  == `1`, otherwise `0`;
+- PTV for Populist Party: PTV scores for AfD (DE), FN (FR), Ln, M5S, FdI (IT), PiS (PL), Vox (SP), SD (SW) 
+
+```{r "testing-h1", fig.width=18, fig.height=18}
+source(here("src/analysis/data_h1.R"))
+source(here("src/analysis/analysis_h1.R"))
+
+h1
+```
+
+Models where the data does not support the hypothesis:
+
+- S1 France: hypothesis is not supported in `11%` of the models, hypothesis is not supported if `trust_index` was **not** included
+- S1 Germany:hypothesis is not supported in  `8%` of the models, hypothesis is not supported if `trust_index` was **not** included when main independent variable is `populist party id`
+- S1 Poland: hypothesis is not supported in `76%` of the models -- no pattern for significant/ not significant models
+- S1 Sweden: hypothesis is not supported in `51%` of the models -- no pattern for significant/ not significant models
+
+- S2 France Covid: hypothesis is not supported in `61%` of the models -- significant for the models from "raw" survey data; i.e. no matching applied, no weights
+- S2 Germany Covid: hypothesis is not supported in `2%` of the models, hypothesis is not supported if matching is applied and all controls are added
+- S2 Italy Covid: hypothesis is not supported in `17%` of the models, hypothesis is not supported if matching is applied and independent variable is `populist vote recall`
+- S2 Poland Covid: hypothesis is not supported in `83%` of the models -- only significant for models where matching is **not** applied
+- S2 Spain Covid: hypothesis is not supported in `2%` of the models, hypothesis is not supported if matching is applied and all controls are added
+- S2 Sweden Covid: hypothesis is not supported in `51%` of the models -- mostly insignificant when matching is applied
+
+- S2 France PICOM: hypothesis is not supported in `13%` of the models, hypothesis is not supported if matching is applied
+- S2 Italy PICOM: hypothesis is not supported in `75%` of the models, hypothesis is not supported if matching is applied
+- S2 Poland PICOM: hypothesis is not supported in `13%` of the models -- not significant for some of the models where matching is not applied, but not a real pattern
+- S2 Spain PICOM: hypothesis is not supported in `31%` of the models -- mostly insignificant when matching and no weighting is applied
+- S2 Sweden PICOM: hypothesis is not supported in `<1%` of the models -- only insignificant for matched unweighted data where independent variable is `populist party id` and all controls are included
+
+```{r "model info h1", echo = FALSE}
+mh1 <- ms1 %>% 
+  add_case(ms2a) %>% 
+  add_case(ms2b)
+
+kbl(mh1, booktabs =T, caption = "Frequency Table Significant Models H1", longtable = T) %>%
+  kable_styling(latex_options = c("striped", "hold_position", "repeat_header"),
+                full_width = F, fixed_thead = T, position = "center") %>%
+  column_spec(1, width = "1cm") %>%
+  column_spec(2, width = "3cm") %>% 
+  column_spec(3, width = "3cm") %>% 
+  column_spec(4, width = "3cm")
+rm(m1a,m1b, m1c, m1e, m1f, m1g)
+```
+
+\newpage
+
+## H2: Voters that see more distance between themselves and the incumbent government party/parties are more likely to believe in conspiracies than voters that position themselves closer to the incumbent(s)
+
+### Main Independent Variables
+- Ideological Distance from Mean Government Position: absolute distance between self placement and mean position of government parties on Left/Right scale
+- Ideological Distance from Median Party: absolute distance between self placement and median position of government parties on Left/Right scale
+-  Distance from Mean Party: absolute distance between self placement and mean position of government parties on COVID-tradeof scale
+-  Distance from Median Party: absolute distance between self placement and median position of government parties  on COVID-tradeof scale
+  - _In your opinion, in the context of a pandemic crisis, is it better to establish all the restrictions that could preserve public health or is it better to leave economic activities open to protect jobs? Please answer on a score from 0-10._
+  
+```{r "testing-h2", fig.width=18, fig.height=18}
+source(here("src/analysis/data_h2.R"))
+source(here("src/analysis/analysis_h2.R"))
+
+h2
+```
+
+```{r "model info h6", echo=FALSE}
+kbl(ms1, booktabs =T, caption = "Frequency Table Significant Models H6", longtable = T) %>%
+  kable_styling(latex_options = c("striped", "hold_position", "repeat_header"),
+                full_width = F, fixed_thead = T, position = "center") %>%
+  column_spec(1, width = "1cm") %>%
+  column_spec(2, width = "3cm") %>% 
+  column_spec(3, width = "3cm") %>% 
+  column_spec(4, width = "3cm")
+rm(m6a,m6b, m6c)
+
+```
+
+Models where the data does not support the hypothesis: 
+
+- S1 France: hypothesis is not supported in `61%` of the models
+- S1 Germany: hypothesis is not supported in  `19%` of the models
+- S1 Poland: hypothesis is not supported in `70%` of the models
+- S1 Spain: hypothesis is not supported in `38%` of the models
+- S1 Sweden: hypothesis is not supported in `60%` of the models
